@@ -41,9 +41,9 @@ class PlaceHolderWidget(_Widget):
         super(PlaceHolderWidget, self).__init__(**kwargs)
 
     def _render(self, **data):
-        self.content = [' ' * data['size']][0] * data['size'][1]
-        self._width = data['width']
-        self._height = data['height']
+        self.content = [' ' * data['size'][0]] * data['size'][1]
+        self._width = data['size'][0]
+        self._height = data['size'][1]
         return self.content
 
 
@@ -89,7 +89,7 @@ class ThinTitleWidget(_Widget):
     def _render(self, **data):
         self._width = max(max(len(line) for line in data['child'].build()), len(data['title']) + 1)
         self._height = data['child'].height + 1
-        self.content = [f'={data["title"]}'.ljust(self._width, '-')]
+        self.content = [f'-{data["title"]}'.ljust(self._width, '-')]
         self.content.extend(map(lambda line: line.ljust(self._width), data['child'].build()))
         return self.content
 
@@ -146,7 +146,7 @@ class ThinBorderCardWidget(_Widget):
         self._width = max(data['child'].width + 2, len(data["title"]) + 1)
         self._height = data['child'].height + 2
         self.content.append(f'-{data["title"]}'.ljust(self._width, '-'))
-        self.content.extend(['|' + (line.center(self._width - 2)) + '||' for line in data['child'].build()])
+        self.content.extend(['|' + (line.center(self._width - 2)) + '|' for line in data['child'].build()])
         self.content.append('-' * self._width)
         return self.content
 
@@ -171,7 +171,7 @@ class RowWidget(_Widget):
         super(RowWidget, self).__init__(**kwargs)
 
     def _render(self, **data):
-        self._width = sum([len(child.width) for child in data['children']])
+        self._width = sum([child.width for child in data['children']])
         self._height = max(child.height for child in data['children'])
         self.content = [''.join(line) for line in zip(*[
             (child.build() + [' ' * child.width] * self._height)[:self._height] for child in data['children']])]
@@ -212,6 +212,7 @@ class ColumnWidget(_Widget):
         self._height = sum(child.height for child in data['children'])
         self._width = max(child.width for child in data['children'])
         self.content = [line.ljust(self._width) for child in data['children'] for line in child.build()]
+        return self.content
 
 
 class ThinBorderColumnWidget(_Widget):
