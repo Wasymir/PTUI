@@ -223,10 +223,11 @@ class ThinBorderColumnWidget(_Widget):
         self._height = sum(child.height for child in data['children']) + len(data['children']) - 1
         self._width = max(child.width for child in data['children'])
         for child in data['children']:
-            if not child == data['children'][-1]:
-                self.content.append('-' * self._width)
+
             for line in child.build():
                 self.content.append(line)
+            if not child == data['children'][-1]:
+                self.content.append('-' * self._width)
         return self.content
 
 
@@ -238,8 +239,8 @@ class ThickBorderColumnWidget(_Widget):
         self._height = sum(child.height for child in data['children']) + len(data['children']) - 1
         self._width = max(child.width for child in data['children'])
         for child in data['children']:
-            if not child == data['children'][-1]:
-                self.content.append('=' * self._width)
             for line in child.build():
                 self.content.append(line)
+            if not child == data['children'][-1]:
+                self.content.append('=' * self._width)
         return self.content

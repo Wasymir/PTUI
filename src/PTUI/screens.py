@@ -39,7 +39,7 @@ class AutoRefreshingScreen(_Screen):
 
     def start(self):
         self.running = True
-        threading.Thread(target=self._refresh()).start()
+        _ = threading.Thread(target=self._refresh).start()
         return self
 
     def stop(self):
@@ -54,4 +54,27 @@ class ManualRefreshScreen(_Screen):
     def refresh(self):
         os.system('cls')
         print(str(self))
+        return self
+
+
+class ScreensManager:
+    def __init__(self, **kwargs):
+        for key, screen in kwargs.items():
+            setattr(self, key, screen)
+
+        self.displayed_screen = list(kwargs.items())[0][1]
+
+    def display(self, screen_id):
+        if isinstance(self.displayed_screen, AutoRefreshingScreen):
+            self.displayed_screen.stop()
+        self.displayed_screen = getattr(self, screen_id)
+        if isinstance(self.displayed_screen, AutoRefreshingScreen):
+            self.displayed_screen.start()
+        else:
+            self.displayed_screen.refresh()
+        return self
+
+    def refresh(self):
+        if isinstance(self.displayed_screen, ManualRefreshScreen):
+            self.displayed_screen.refresh()
         return self
