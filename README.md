@@ -1,6 +1,7 @@
 # PTUI
 
 ---
+
 ## Small, Python, Flutter Inspired TUI Framework
 
 ___
@@ -162,7 +163,7 @@ Widget that place another widgets in a column.
 
 ___
 
-##### ColumnThinBorderWidget
+##### ThinBorderColumnWidget
 
 Widget that place another widgets in a column and separates them with thin border.
 
@@ -172,7 +173,7 @@ Widget that place another widgets in a column and separates them with thin borde
 
 ___
 
-##### ColumnThickBorderWidget
+##### ThickBorderColumnWidget
 
 Widget that place another widgets in a column and separates them with thick border.
 
@@ -195,7 +196,7 @@ There are to ways to pass data to widget:
   If you change data passed with that method and refresh the widget, displayed data will also change.
 
 All types all data are passed as an arguments to the Widget constructor, but the dynamic ones are passed as dictionary
-returned from an anonymous function created with lambda keyword, and the static ones are passed just as kwargs.
+returned from an anonymous function created with lambda keyword passed as `dynamic_data`.
 
 ###### Example
 
@@ -205,19 +206,17 @@ from PTUI.widgets import ThickBorderCardWidget
 title = 'bar'
 child =  # place here another Widget
 foo = ThickBorderCardWidget(
-    lambda: {
+    dynamic_data= lambda: {
         'title': title
     },
-    **{
-        'child': child
-    }
+    child = child
+    
 )
 ```
 
 If you change the title variable and refresh the widget will change it's title, but if you do the same to child
 variable, nothing will happen.
 
-### Remember that dynamic_data is a required argument, so even if you don't want to pass any dynamic data, you have to pass empty dictionary as lambda function return!
 
 ---
 ---
@@ -250,7 +249,6 @@ Screen that refreshes itself one per specified period of time.
 | stop  | starts refreshing screen | None |
 | \_\_str__  | returns rendered string instead of printing it | None |
 
-
 ___
 
 ##### ManualRefreshScreen
@@ -265,9 +263,7 @@ Screen that you have to refresh manually.
 | Function|      Description      |  parameters |
 |----------|:-------------:|------:|
 | refresh | refreshes screen | None |
-
-
-
+| \_\_str__  | returns rendered string instead of printing it | None |
 
 ___
 
