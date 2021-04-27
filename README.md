@@ -19,7 +19,7 @@ ___
 
 ---
 
-##### TextWidget
+##### widgets.TextWidget
 
 ---
 ```
@@ -37,7 +37,7 @@ Widget that's just text.
 
 ___
 
-##### PlaceHolderWidget
+#####  widgets.PlaceHolderWidget
 
 ---
 ```
@@ -45,7 +45,7 @@ ___
          
          
 ```
-###### Place Holder Widget example
+###### PlaceHolder Widget example
 
 ---
 Just an empty space.
@@ -55,7 +55,7 @@ Just an empty space.
 | size: `list<int>`| size of the empty space in format `[WIDTH : int, HEIGHT : int]` | Required |
 
 ---
-##### ThickBorderWidget
+#####  widgets.ThickBorderWidget
 
 ---
 ```
@@ -83,7 +83,7 @@ Widget that wraps another widget with a thin border.
 | border: `List<bool>` | specifies on which side would be border. `[TOP: bool, RIGTH: bool, BOTTOM: bool, LEFT: bool]` | Required |
 ___
 
-##### ThickBorderWidget
+#####  widgets.ThickBorderWidget
 
 ---
 ```
@@ -111,7 +111,7 @@ Widget that wraps another widget with a thick border.
 
 ___
 
-##### ThickTitleWidget
+#####  widgets.ThickTitleWidget
 
 ---
 ```
@@ -130,7 +130,7 @@ Widget that adds title decorated with thick line to another widget.
 
 ___
 
-##### ThinTitleWidget
+#####  widgets.ThinTitleWidget
 
 ---
 ```
@@ -149,7 +149,7 @@ Widget that adds title decorated with thin line to another widget.
 
 ___
 
-##### PaddingWidget
+#####  widgets.PaddingWidget
 
 ---
 ```
@@ -169,7 +169,7 @@ Widget that adds padding around the another widget.
 
 ___
 
-##### ThinBorderCardWidget
+#####  widgets.ThinBorderCardWidget
 
 ---
 ```
@@ -189,7 +189,7 @@ Widget that wraps another widget with Thin Border with title.
 
 ___
 
-##### ThickBorderCardWidget
+#####  widgets.ThickBorderCardWidget
 
 ---
 ```
@@ -209,7 +209,7 @@ Widget that wraps another widget with Thick Border with title.
 
 ___
 
-##### RowWidget
+#####  widgets.RowWidget
 
 ---
 ```
@@ -226,7 +226,7 @@ Widget that place another widgets in a row.
 
 ___
 
-##### ThinBorderRowWidget
+#####  widgets.ThinBorderRowWidget
 
 ---
 ```
@@ -243,7 +243,7 @@ Widget that place another widgets in a row and separates them with thin border.
 
 ___
 
-##### ThickBorderRowWidget
+#####  widgets.ThickBorderRowWidget
 
 ---
 ```
@@ -260,7 +260,7 @@ Widget that place another widgets in a row and separates them with thick border.
 
 ___
 
-##### ColumnWidget
+#####  widgets.ColumnWidget
 
 ---
 ```
@@ -281,7 +281,7 @@ Widget that place another widgets in a column.
 
 ___
 
-##### ThinBorderColumnWidget
+#####  widgets.ThinBorderColumnWidget
 
 ---
 ```
@@ -306,7 +306,7 @@ Widget that place another widgets in a column and separates them with thin borde
 
 ___
 
-##### ThickBorderColumnWidget
+#####  widgets.ThickBorderColumnWidget
 
 ---
 ```
@@ -365,6 +365,25 @@ foo = ThickBorderCardWidget(
 If you change the title variable and refresh the widget will change it's title, but if you do the same to body variable,
 nothing will happen.
 
+---
+---
+## Styling Text
+
+---
+#### Because whole UI is text, by styling text you style whole UI.
+
+___
+
+You can style widget by passing to it StyleData object as style parameter.
+
+---
+##### styles.StyleData
+
+| Parameters : type  |      Description      |  Required/Default |
+|----------|:-------------:|------:|
+| font_color : `styles.Colors.FontColors.*` | font color | default console font color |
+| background_color : `styles.Colors.BackgroundColors.*` | font background color | default console font background color |
+| font_brightness : `styles.Colors.FontBrightness.*` | font brightness | default console font brightness |
 
 ---
 ---
@@ -381,7 +400,7 @@ nothing will happen.
 
 ---
 
-##### AutoRefreshingScreen
+##### screens.AutoRefreshingScreen
 
 Screen that refreshes itself one per specified period of time.
 
@@ -399,7 +418,7 @@ Screen that refreshes itself one per specified period of time.
 
 ___
 
-##### ManualRefreshScreen
+##### screens.ManualRefreshScreen
 
 Screen that you have to refresh manually.
 

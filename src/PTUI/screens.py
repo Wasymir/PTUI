@@ -1,24 +1,36 @@
 import os
+import re
 import threading
 import time
+import colorama
+from .exeptions import TooSmallScreen
 
 
 class _Screen:
-    class ToSmallTerminal(Exception):
-        pass
-
     def __init__(self, child, centered):
         self.child = child
         self.centered = centered
-        self.content = []
+
+    def center(self, line, width):
+        def remove_styling(text):
+            reaesc = re.compile(r'\x1b[^m]*m')
+            return reaesc.sub('', text)
+
+        real_length = len(remove_styling(line))
+        left = (width - real_length) // 2
+        right = width - real_length - left
+        return ' ' * left + line + ' ' * right
 
     def _render(self):
         if self.child.width > os.get_terminal_size()[0] or self.child.height > os.get_terminal_size()[1]:
-            # raise self.ToSmallTerminal()
-            pass
-        self.content = [(line.center(os.get_terminal_size()[0]) if self.centered else line) for line in
-                        self.child.build()]
-        return self.content
+            raise TooSmallScreen
+        content = [
+            ''.join(row) + colorama.Style.RESET_ALL
+            for row in self.child.build()
+        ]
+        if self.centered:
+            content = list(map(lambda line: self.center(line,os.get_terminal_size()[0]),content))
+        return content
 
     def __str__(self):
         return '\n'.join(self._render())
