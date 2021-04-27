@@ -2,7 +2,9 @@ import os
 import re
 import threading
 import time
+
 import colorama
+
 from .exeptions import TooSmallScreen
 
 
@@ -29,7 +31,7 @@ class _Screen:
             for row in self.child.build()
         ]
         if self.centered:
-            content = list(map(lambda line: self.center(line,os.get_terminal_size()[0]),content))
+            content = list(map(lambda line: self.center(line, os.get_terminal_size()[0]), content))
         return content
 
     def __str__(self):
@@ -45,7 +47,7 @@ class AutoRefreshingScreen(_Screen):
 
     def _refresh(self):
         while self.running:
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print(str(self))
             time.sleep(self.refresh_rate)
 
@@ -64,9 +66,18 @@ class ManualRefreshScreen(_Screen):
         super(ManualRefreshScreen, self).__init__(child, centered)
 
     def refresh(self):
-        os.system('cls')
+        os.system('cls' if os.name == 'nt' else 'clear')
         print(str(self))
         return self
+
+
+class InputScreen(ManualRefreshScreen):
+    def __init__(self, child, centered=True):
+        super(InputScreen, self).__init__(child, centered)
+
+    def get_input(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        return input(str(self))
 
 
 class ScreensManager:
@@ -82,9 +93,10 @@ class ScreensManager:
         self.displayed_screen = getattr(self, screen_id)
         if isinstance(self.displayed_screen, AutoRefreshingScreen):
             self.displayed_screen.start()
-        else:
+        elif isinstance(self.displayed_screen, ManualRefreshScreen):
             self.displayed_screen.refresh()
-        return self
+        else:
+            return self.displayed_screen.get_input()
 
     def refresh(self):
         if isinstance(self.displayed_screen, ManualRefreshScreen):

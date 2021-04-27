@@ -126,7 +126,7 @@ Widget that adds title decorated with thick line to another widget.
 | Parameters : type  |      Description      |  Required/Default |
 |----------|:-------------:|------:|
 | child : `Widget` | widget which is added title  | Required |
-| title : `str` | title that is added to widget | Required |
+| title : `TextWidget` | title that is added to widget | Required |
 
 ___
 
@@ -145,7 +145,7 @@ Widget that adds title decorated with thin line to another widget.
 | Parameters : type  |      Description      |  Required/Default |
 |----------|:-------------:|------:|
 | child : `Widget` | widget which is added title  | Required |
-| title : `str` | title that is added to widget | Required |
+| title : `TextWidget` | title that is added to widget | Required |
 
 ___
 
@@ -185,7 +185,7 @@ Widget that wraps another widget with Thin Border with title.
 | Parameters : type  |      Description      |  Required/Default |
 |----------|:-------------:|------:|
 | child : `Widget` | widget which is wrapped  | Required |
-| title : `str` | title that is added to BOrder | Required |
+| title : `TextWidget` | title that is added to BOrder | Required |
 
 ___
 
@@ -205,7 +205,7 @@ Widget that wraps another widget with Thick Border with title.
 | Parameters : type  |      Description      |  Required/Default |
 |----------|:-------------:|------:|
 | child : `Widget` | widget which is wrapped  | Required |
-| title : `str` | title that is added to Border | Required |
+| title : `TextWidget` | title that is added to Border | Required |
 
 ___
 
