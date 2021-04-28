@@ -14,7 +14,7 @@ class _Widget:
         self._height = 0
         self.dynamic_data = (kwargs['dynamic_data'] if 'dynamic_data' in kwargs.keys() else lambda: {})
         self.static_data = kwargs.copy()
-        self.style_data = (kwargs['style'] if 'style' in kwargs.keys() else StyleData())
+        self.style_data = (self.data['style'] if 'style' in self.data.keys() else StyleData())
         self.build()
 
     def char(self, char=' '):
