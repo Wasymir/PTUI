@@ -6,7 +6,7 @@ from PTUI.widgets import ThickBorderCardWidget, TextWidget, PaddingWidget
 
 style_night = StyleData(background_color=Colors.BackgroundColors.Blue)
 style_day = StyleData(background_color=Colors.BackgroundColors.Cyan)
-actual_style = lambda: style_night if True else style_day
+actual_style = lambda: style_night if 14 < datetime.now().hour < 7 else style_day
 
 ui = ManualRefreshScreen(
     child=ThickBorderCardWidget(
@@ -18,7 +18,7 @@ ui = ManualRefreshScreen(
             child=TextWidget(
                 dynamic_data=lambda: {
                     'style': actual_style(),
-                    'text': '21:37:00'
+                    'text': datetime.now().strftime("%H:%M:%S")
                 }
             )
         )
