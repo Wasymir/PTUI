@@ -3,7 +3,7 @@ import re
 import textwrap
 
 from .exeptions import BadInputData, InputStringMustBeOneCharacterLong
-from .styles import StyleData
+from .styles import StyleData, style, Colors
 
 
 # Base
@@ -20,7 +20,20 @@ class _Widget:
     def char(self, char=' '):
         if len(char) != 1:
             raise InputStringMustBeOneCharacterLong
-        return self.style_data.get_data() + char
+        return style(char, self.style_data)
+
+    @property
+    def data(self):
+        try:
+            return dict(self.dynamic_data(), **self.static_data)
+        except KeyError:
+            raise BadInputData
+
+    def get_from_data(self, key):
+        try:
+            return self.data[key]
+        except KeyError:
+            raise BadInputData
 
     @property
     def height(self):
@@ -41,11 +54,10 @@ class _Widget:
             width = self._width
         if height is None:
             height = self._height
-        try:
-            raw = self._render(**dict(self.dynamic_data(), **self.static_data))
-        except KeyError:
-            raise BadInputData
-        content = list(map(lambda row: (row + [self.char()] * width)[:width], raw))
+        raw = self._render(**self.data)
+        left = (width - max([len(row) for row in raw])) // 2
+        right = width - max([len(row) for row in raw]) - left
+        content = list(map(lambda row: [self.char()] * left + row + [self.char()] * right, raw))
         content = (content + [[self.char() for _ in range(width)]] * height)[:height]
         return content
 
@@ -124,6 +136,16 @@ class TextWidget(_Widget):
             for un_wrapped in data['text'].split('\n') for line in textwrap.wrap(un_wrapped, wrap)
         ]
         return content
+
+
+class CharWidget(_Widget):
+    def __init__(self, **kwargs):
+        super(CharWidget, self).__init__(**kwargs)
+
+    def _render(self, **data):
+        self._width = 0
+        self._height = 0
+        return self.char(data['chr'])
 
 
 # Nesting
@@ -317,4 +339,38 @@ class ThickBorderColumnWidget(_Widget):
                 content.append(row)
             if not child == data['children'][-1]:
                 content.append([self.char('=')] * self._width)
+        return content
+
+
+# artistic
+class ArtWidget(_Widget):
+    def __init__(self, **kwargs):
+        super(ArtWidget, self).__init__(**kwargs)
+
+    def _render(self, **data):
+        pixels = {
+            'B': style(' ', StyleData(background_color=Colors.BackgroundColors.Black)),
+            'r': style(' ', StyleData(background_color=Colors.BackgroundColors.Red)),
+            'g': style(' ', StyleData(background_color=Colors.BackgroundColors.Green)),
+            'y': style(' ', StyleData(background_color=Colors.BackgroundColors.Yellow)),
+            'b': style(' ', StyleData(background_color=Colors.BackgroundColors.Blue)),
+            'm': style(' ', StyleData(background_color=Colors.BackgroundColors.Magenta)),
+            'c': style(' ', StyleData(background_color=Colors.BackgroundColors.Cyan)),
+            'w': style(' ', StyleData(background_color=Colors.BackgroundColors.White)),
+            ' ': self.char()
+        }
+
+        def pixel(color_key):
+            try:
+                return pixels[color_key]
+            except KeyError:
+                raise BadInputData
+
+        self._height = len(data['art'].split('\n'))
+        self._width = max(len(line) for line in data['art'].split('\n'))
+        content = []
+        for line in data['art'].split('\n'):
+            content.append([])
+            for char in ([pixel(char) for char in line] + [self.char()] * self._width)[:self._width]:
+                content[-1].append(char)
         return content

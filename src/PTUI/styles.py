@@ -43,3 +43,7 @@ class StyleData:
 
     def get_data(self):
         return self.font_color + self.background_color + self.font_brightness
+
+
+def style(text, style):
+    return style.get_data() + text + colorama.Style.RESET_ALL

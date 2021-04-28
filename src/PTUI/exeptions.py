@@ -8,3 +8,11 @@ class BadInputData(Exception):
 
 class InputStringMustBeOneCharacterLong(Exception):
     pass
+
+
+class ChildrenMustBeCharWidget(Exception):
+    pass
+
+
+class NoSuchScreen(Exception):
+    pass

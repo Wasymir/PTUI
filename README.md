@@ -399,25 +399,6 @@ You can style widget by passing to it StyleData object as style parameter.
 ### List of screens:
 
 ---
-
-##### screens.AutoRefreshingScreen
-
-Screen that refreshes itself one per specified period of time.
-
-| Parameters : type  |      Description      |  Required/Default |
-|----------|:-------------:|------:|
-| child : `Widget` | widget that is built and  displayed| Required |
-| centered : `bool` | specifies if widget should be in the center of terminal | True |
-| refresh_time : `float` | specified period of time in which screen should be refreshed | 0.1 |
-
-| Function|      Description      |  parameters |
-|----------|:-------------:|------:|
-| start | stops refreshing screen | None |
-| stop  | starts refreshing screen | None |
-| \_\_str__  | returns rendered string instead of printing it | None |
-
-___
-
 ##### screens.ManualRefreshScreen
 
 Screen that you have to refresh manually.
@@ -445,7 +426,7 @@ ___
 | Function|      Description      |  parameters |
 |----------|:-------------:|------:|
 | display | display screen, which it was passed as argument | screen_id : `str` |
-| refresh  | if currently displayed screen is a `ManualRefreshScreen`, refreshes it | None |
+| refresh  | refreshes actual screen | None |
 
 ### Passing data to Screens Manager
 
